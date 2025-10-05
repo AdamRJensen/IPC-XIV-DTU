@@ -1,4 +1,4 @@
-All times are local times, which is one hour ahead of measurement time (UTC).
+All times are local times, which is one hour ahead of the official IPC time, which is again one hour ahead of time in my data files (UTC).
 
 Aligned before 
 9.14: Cleaned with wipes
@@ -18,9 +18,6 @@ Aligned before
 2025-10-03
 08:58: Started measuring both SHP1 instruments. Both were clean and aligned prior to logging.
 
-
-
-I noticed that the calibration coefficient for my SHP1-185163 pyrheliometer is incorrectly listed in the 2021 IPC report. I wrote about it in the email below, but I guessed it was missed.
 
 TODO
 - Write Joob about documents
