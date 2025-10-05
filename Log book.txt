@@ -1,0 +1,30 @@
+All times are local times, which is one hour ahead of measurement time (UTC).
+
+Aligned before 
+9.14: Cleaned with wipes
+9:16: Restarted logging to make sure file output was good
+9:42: Change calibration coefficient from 8.61577 to 8.52
+14:05 Stopped logging in order to add additional SHP1
+14:14 Started logging of both SHP1 instruments
+14:26 Both instruments are aligned and cleaned. Made minor adjustments to the first SHP1 too (but very minor). 
+
+15:51: Cleaned both glasses (looked clean already, only tiny speckles)
+16.27. stopped
+
+16:3X: Started logging DR30
+16:35: Cleaned DR30
+17:XX Ended measurements
+
+2025-10-03
+08:58: Started measuring both SHP1 instruments. Both were clean and aligned prior to logging.
+
+
+
+I noticed that the calibration coefficient for my SHP1-185163 pyrheliometer is incorrectly listed in the 2021 IPC report. I wrote about it in the email below, but I guessed it was missed.
+
+TODO
+- Write Joob about documents
+- Add instruments/pyrgeometer on IPC page
+
+CHP1 serial number: 090137
+Original calibration: 8.08 2009
