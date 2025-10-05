@@ -73,7 +73,7 @@ def read_kipp_zonen(filename):
 
 # %%
 
-data_path = 'C:/Users/arajen/OneDrive - Danmarks Tekniske Universitet/Skrivebord/IPC/'
+data_path = 'C:/GitHub/IPC-XIV-DTU/'
 
 filenames = glob.glob(data_path + 'Data/2025100*/LOG*.csv')
 
@@ -108,7 +108,7 @@ df.loc['2025-10-02 12:18:35': '2025-10-02 12:18:55', 'SHP1-205241'] = np.nan
 
 df['SHP1-205241-adjusted'] = df['SHP1-205241']*1.014
 
-radiation = ['SHP1-185163', 'SHP1-205241', 'SHP1-205241-adjusted']
+radiation = [c for c in df.columns if c.startswith('SHP1')]
 
 df['2025-10-03 06':].plot(subplots=True, sharex=True, figsize=(10, 10))
 #df.loc['2025-10-02 12:05':'2025-10-02 12:28'].plot(subplots=True, sharex=True, figsize=(10, 10), style='.')
@@ -123,18 +123,17 @@ df.loc['2025-10-03 06':, radiation].plot(sharex=True, ylim=[850, 1050])
 df['diff'] = df['SHP1-185163'] - df['SHP1-205241']
 df['diff-adjusted'] = df['SHP1-185163'] - df['SHP1-205241-adjusted']
 
-df.loc['2025-10-03 06':, 'diff-adjusted'].plot(grid=True, ylim=[-5,5])
+df.loc['2025-10-03 06':, 'diff-adjusted'].plot(grid=True, ylim=[-5, 5])
 
 # %%
 
-df.loc['2025-10-03 06':, ['SHP1-185163','SHP1-205241']].diff().plot(subplots=True, sharex=True, ylim=[-10,10])
+df.loc['2025-10-03 06':, ['SHP1-185163', 'SHP1-205241']].diff().plot(
+    subplots=True, sharex=True, ylim=[-10, 10])
 
 
 # %%
 
-radiation_columns = [c for c in df.columns if c.startswith('SHP1')]
-
-df.loc['2025-10-02 12:30':, radiation_columns].plot()
+df.loc['2025-10-02 12:30':, radiation].plot()
 
 df['radiation_ratio'] = df['SHP1-205241'] / df['SHP1-185163']
 
@@ -149,11 +148,12 @@ for pyrheliometer in ['SHP1-185163', 'SHP1-205241']:
     for date in df.index.to_series().dt.date.unique():
         export = [pyrheliometer, 'WRR 1.000000']
         df_sub = df[df[pyrheliometer].notna() & (df.index.date == date)]
+        # !!!Logging time is in UTC time for the Kipp & Zone SmartExplorer software!!!
         df_sub.index = df_sub.index + pd.Timedelta(hours=1)
         df_lines = df_sub.index.strftime('%Y %m %d %H:%M:%S') + ' ' + df_sub[pyrheliometer].astype(str)
         export = export + df_lines.to_list()
         df_export = pd.Series(export)
-    
+
         filename = f"{pyrheliometer}_{df_sub.index[0].strftime('%y-%m-%d_%H%M')}.dat"
         df_export.to_csv(data_path + 'Data export/' + filename, index=False, header=None)
 
@@ -180,7 +180,8 @@ pyrheliometer = 'DR30D1-65086'
 for date in df.index.to_series().dt.date.unique():
     export = [pyrheliometer, 'WRR 1.000000']
     df_sub = df[df[pyrheliometer].notna() & (df.index.date == date)]
-    df_sub.index = df_sub.index + pd.Timedelta(hours=1)
+    # !!!Logging time is in local time for the Hukseflux software!!!
+    df_sub.index = df_sub.index - pd.Timedelta(hours=1)
     df_lines = df_sub.index.strftime('%Y %m %d %H:%M:%S') + ' ' + df_sub[pyrheliometer].astype(str)
     export = export + df_lines.to_list()
     df_export = pd.Series(export)
