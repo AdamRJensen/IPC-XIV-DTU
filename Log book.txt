@@ -1,27 +1,36 @@
-All times are local times, which is one hour ahead of the official IPC time, which is again one hour ahead of time in my data files (UTC).
+All times are local times, which is one hour ahead of the official IPC time, which is one hour ahead of UTC time.
 
-Aligned before 
+2025-10-02
+Aligned before
 9.14: Cleaned with wipes
 9:16: Restarted logging to make sure file output was good
 9:42: Change calibration coefficient from 8.61577 to 8.52
 14:05 Stopped logging in order to add additional SHP1
 14:14 Started logging of both SHP1 instruments
 14:26 Both instruments are aligned and cleaned. Made minor adjustments to the first SHP1 too (but very minor). 
-
 15:51: Cleaned both glasses (looked clean already, only tiny speckles)
-16.27. stopped
-
+16.27. Stopped logging the two SHP1s
 16:3X: Started logging DR30
 16:35: Cleaned DR30
-17:XX Ended measurements
 
 2025-10-03
 08:58: Started measuring both SHP1 instruments. Both were clean and aligned prior to logging.
 
+2025-10-08
+09:0X - Started logging measurements after the second or third official measurement. Instruments were cleaned at the start and aligned, so there should not be any need for data filtering.
+10:30 ish - for unknown reasons, the behavior of the Angstrom instrument changed. Previously the current for the right and left chamber deviated by approximately 13%. After 13:00 the current applied to the two chambers was almost the same (as should be expected).
+10:53 - Cleaned lower pyrheliometer (feather outside the window, shouldn't have influenced measurements.) Cleaning down outside of cadence, so no need to filter out data.
+11:30 Started logging CHP1. Cleaned the first two minutes, which should be filtered out.
 
-TODO
-- Write Joob about documents
-- Add instruments/pyrgeometer on IPC page
+2025-10-10
+09:22-09:23 Re-cleaned both instruments. SHP1-18... seemed to have residual stuff on the window.
+09:26 Cleaned window of CHP1, didn't seem bad though.
+10:35 Sensors weren't logging, so I disconnected the modbus converter and restarted the datalogger program. No significant data was lost as it was partly cloudy during this period.
+16:13 cleaned DR30
+
 
 CHP1 serial number: 090137
 Original calibration: 8.08 2009
+
+
+
