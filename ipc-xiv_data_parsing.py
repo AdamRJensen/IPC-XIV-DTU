@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
+import os
 
 
 def read_hukseflux(filename):
@@ -236,4 +237,37 @@ for date in df.index.to_series().dt.date.unique():
     filename = f"{pyrheliometer}_{df_sub.index[0].strftime('%y-%m-%d_%H%M')}.dat"
     df_export.to_csv(data_path + '../Data export/' + filename, index=False, header=None)
 
+# %% Angstrom
+
+angstrom_files = glob.glob(data_path + '../Angstrom/Submitted/*')
+dfs = []
+for f in angstrom_files:
+    date_str = os.path.basename(f).split('_')[-2]
+    dfi = pd.read_csv(f, sep='\t', skiprows=8)
+    dfi.index = pd.to_datetime(date_str + dfi['time'], format='%y%m%d%H:%M:%S')
+    dfi = dfi.drop(columns=['Unnamed: 1', 'time'])
+    dfi['combined'] = dfi['Left'].fillna(0) + dfi['Right'].fillna(0)
+    times_middle = (dfi.index + dfi.index.diff()/2).dropna()[:-1]
+    dfi = dfi.asfreq('45s')
+    dfi = dfi.interpolate()
+    dfi = dfi.loc[times_middle, 'combined']
+    dfs.append(dfi)
+
+df_angstrom = pd.concat(dfs, axis='rows')
+print(df_angstrom.head())
+
 # %%
+w_m2_to_cal_min_cm2 = 0.001433
+
+pyrheliometer = 'SHP1-185163-wrr' if 'SHP1-185163-wrr' in df.columns else 'DR30D1-65086'
+
+fig, ax = plt.subplots()
+df_calibration = (df[pyrheliometer]*w_m2_to_cal_min_cm2 /1.021 / (df_angstrom/1000)**2).dropna()
+df_calibration.plot(ax=ax)
+
+ax.axhline(7.04, c='r', label='1977 calibration')
+ax.set_ylabel('pyrheliometer constant [-]')
+ax.legend()
+
+
+
